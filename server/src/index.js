@@ -47,11 +47,11 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/trello_clone';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 connectDb(MONGODB_URI)
   .then(() => {
-    app.listen(PORT, () => console.log(`API http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((e) => {
     console.error('MongoDB connection failed:', e.message);
