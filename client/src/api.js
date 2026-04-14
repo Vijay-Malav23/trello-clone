@@ -1,21 +1,28 @@
+const BASE_URL = "https://trello-clone-d0v4.onrender.com";
+
 const getToken = () => localStorage.getItem('token');
 
 async function request(path, options = {}) {
   const headers = { ...options.headers };
+
   if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
     options.body = JSON.stringify(options.body);
   }
+
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  const res = await fetch(`/api${path}`, { ...options, headers });
+
+  const res = await fetch(`${BASE_URL}/api${path}`, { ...options, headers });
   const data = await res.json().catch(() => ({}));
+
   if (!res.ok) {
     const err = new Error(data.message || res.statusText || 'Request failed');
     err.status = res.status;
     err.data = data;
     throw err;
   }
+
   return data;
 }
 
